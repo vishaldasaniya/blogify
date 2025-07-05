@@ -37,12 +37,9 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', function(next){
     const user = this; 
-    // console.log(this.password)
     if(!user.isModified('password')) return next();
     bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(user.password, salt, function(err, hash) {
-            // console.log(salt);
-            // console.log(hash);
             user.salt = salt;
             user.password = hash;
             next();
@@ -58,7 +55,6 @@ userSchema.static('matchPasswordAndGenerateToken', async function(email,password
     const isMatch = await bcrypt.compare(password, dbPassword);
     if(!isMatch) throw new Error("Email or Password is Incorrect");
     const token = createTokenForUser(user);
-    console.log(token)
     return token; 
     // return {...user, password:undefined, salt:undefined};
 })
