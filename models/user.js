@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     },
     profileImageURL:{
         type:String,
-        default:"../public/images/userAvatar.jpg"
+        default:"/images/userAvatar.jpg"
     }
 
 },{ timestamps:true });
