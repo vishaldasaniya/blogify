@@ -4,23 +4,140 @@
     <%- include('./partials/head') %>
     <title>Homepage</title>
   </head>
-  <body>
-    <%- include('./partials/nav') %>
-
-    <div class="container mt-3">
-      <div class="row row-cols-3">
+  <body style="background-color: #dfdccf ">
+    <%- include('./partials/nav') %> <% if(!locals.user){ %>
+    <div class="container text-center mt-5 mb-5">
+      <h1 class="display-4">Welcome to Blogify</h1>
+      <p class="lead">
+        Read amazing blogs from people around the world.<br />
+        Share your thoughts by writing your own blog — just log in to get
+        started!
+      </p>
+      <a href="/user/signin" class="btn btn-primary btn-sm btn-dark"
+        >Login to Post</a
+      >
+    </div>
+    <% }else{%>
+    <div class="container text-center mt-5 mb-5">
+      <h1 class="display-4">Welcome <%= user.fullName %></h1>
+      <p class="lead">
+        Read amazing blogs from people around the world.<br />
+        Share your thoughts by writing your own blog 
+      </p>
+    </div>
+    <% } %>
+    <div class="container mt-3 bg-white rounded">
+      <h2 class="text-center pt-3 pb-3" style="color: #878370">
+        📚 Explore Latest Blogs
+      </h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
         <% locals.blogs.forEach(blog=>{ %>
-        <div class="col" style="width: 18rem">
-          <img src="<%= blog.blogImageURL %>" class="card-img-top" alt="blogimage" />
-          <div class="card-body">
-            <h5 class="card-title"><%= blog.blogtitle %></h5>
-            <a href="blog/<%=blog._id%>" class="btn btn-primary mt-2">View</a>
+        <div class="col mt-1">
+          <div
+            class="card border m-2"
+            style="height: 100%; width: 100%; background-color: #f5f9fa"
+          >
+            <img
+              src="<%= blog.blogImageURL %>"
+              class="card-img-top"
+              style="height: 80%; object-fit: cover"
+              alt="blogimage"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= blog.blogtitle %></h5>
+              <a href="/blog/<%=blog._id%>" class="btn btn-primary btn-sm mt-2"
+                >View</a
+              >
+            </div>
           </div>
         </div>
         <% }) %>
       </div>
     </div>
 
-    <%- include('./partials/script') %>
+    <section class="container my-5">
+      <h3 class="text-center mb-4">Browse by Categories</h3>
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <a href="/blog/tech" class="btn btn-outline-primary">
+          <div
+            class="card"
+            style="height: 10rem; width: 10rem; background-color: #e8f8e8"
+          >
+            <img
+              src="/images/category1Image.jpg"
+              class="card-img-top"
+              style="height: 80%; width: 100%"
+              alt="img"
+            />
+            <div
+              class="text-center mt-1"
+              style="height: 20%; width: 100%; text-decoration: none"
+            >
+              Tech Blog
+            </div>
+          </div>
+        </a>
+        <a href="/blog/lifestyle" class="btn btn-outline-secondary">
+          <div
+            class="card"
+            style="height: 10rem; width: 10rem; background-color: #e8f8e8"
+          >
+            <img
+              src="/images/category2Image.jpg"
+              class="card-img-top"
+              style="height: 80%; width: 100%"
+              alt="img"
+            />
+            <div
+              class="text-center mt-1"
+              style="height: 20%; width: 100%; text-decoration: none"
+            >
+              Lifestyle Blog
+            </div>
+          </div>
+        </a>
+        <a href="/blog/food" class="btn btn-outline-success">
+          <div
+            class="card"
+            style="height: 10rem; width: 10rem; background-color: #e8f8e8"
+          >
+            <img
+              src="/images/category3Image.jpg"
+              class="card-img-top"
+              style="height: 80%; width: 100%"
+              alt="img"
+            />
+            <div
+              class="text-center mt-1"
+              style="height: 20%; width: 100%; text-decoration: none"
+            >
+              Food Blog
+            </div>
+          </div>
+        </a>
+        <a href="/blog/travel" class="btn btn-outline-info">
+          <div
+            class="card"
+            style="height: 10rem; width: 10rem; background-color: #e8f8e8"
+          >
+            <img
+              src="/images/category4Image.jpg"
+              class="card-img-top"
+              style="height: 80%; width: 100%"
+              alt="img"
+            />
+            <div
+              class="text-center mt-1"
+              style="height: 20%; width: 100%; text-decoration: none"
+            >
+              Travel Blog
+            </div>
+          </div>
+        </a>
+        <!-- <a href="/category/travel" class="btn btn-outline-info">Other Blog  </a> -->
+      </div>
+    </section>
+
+    <%- include('./partials/footer') %> <%- include('./partials/script') %>
   </body>
 </html>

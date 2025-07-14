@@ -24,29 +24,17 @@ router.get("/add-new", (req,res)=>{
 });
 
 router.post("/addblogdb",upload.single('blogimage'), async (req,res)=>{
-    const { blogtitle, blogbody } = req.body;
+    const { blogtitle,blogtype, blogbody } = req.body;
     const blog = await Blog.create({
         blogtitle,
         blogbody,
         blogImageURL:`/uploads/${req.file.filename}`,
-        createdBy:req.user._id
+        createdBy:req.user._id,
+        blogtype
     })
     return res.redirect(`/blog/${blog._id}`);
 });
 
-router.get("/:id",async (req,res)=>{
-  const blogid = req.params.id;
-  const bloginfo =await Blog.findById(blogid).populate("createdBy");
-  const commentInfo =await Comment.find({commentOnBlog:req.params.id}).populate("commentedBy");
-  // console.log(bloginfo);
-  return res.render("blogDetails",
-    {
-      user:req.user,
-      bloginfo,
-      commentInfo
-    }
-  );
-})
 
 
 router.post("/comment/:id", async (req,res)=>{
@@ -62,6 +50,48 @@ router.post("/comment/:id", async (req,res)=>{
   return res.redirect(`/blog/${req.params.id}`);
 })
 
+router.get('/tech',async(req,res)=>{
+  const blogs = await Blog.find({blogtype:'tech'});
+  return res.render('techblog',{
+        user:req.user,
+        blogs
+    })
+})
+router.get('/lifestyle',async(req,res)=>{
+  const blogs = await Blog.find({blogtype:'lifestyle'});
+  return res.render('lifestyleblog',{
+        user:req.user,
+        blogs
+    })
+})
+router.get('/food',async(req,res)=>{
+  const blogs = await Blog.find({blogtype:'food'});
+  return res.render('foodblog',{
+        user:req.user,
+        blogs
+    })
+})  
+router.get('/travel',async(req,res)=>{
+  const blogs = await Blog.find({blogtype:'travel'});
+  return res.render('travelblog',{
+        user:req.user,
+        blogs
+    })
+})
+
+router.get("/:id",async (req,res)=>{
+  const blogid = req.params.id;
+  const bloginfo =await Blog.findById(blogid).populate("createdBy");
+  const commentInfo =await Comment.find({commentOnBlog:req.params.id}).populate("commentedBy");
+  // console.log(bloginfo);
+  return res.render("blogDetails",
+    {
+      user:req.user,
+      bloginfo,
+      commentInfo
+    }
+  );
+})
 
 
 module.exports = router;

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Signup Page</title>
+  </head>
+  <body style="background-color: #dfdccf">
+    <%- include('./partials/nav') %>
+
+    <div class="container mt-3 bg-white rounded">
+      <h2 class="text-center pt-3 pb-3" style="color: #878370">
+        📚 LifeStyle Blogs
+      </h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+        <% locals.blogs.forEach(blog=>{ %>
+        <div class="col mt-1">
+          <div
+            class="card border m-2"
+            style="height: 100%; width: 100%; background-color: #f5f9fa"
+          >
+            <img
+              src="<%= blog.blogImageURL %>"
+              class="card-img-top"
+              style="height: 80%; object-fit: cover"
+              alt="blogimage"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= blog.blogtitle %></h5>
+              <a href="/blog/<%=blog._id%>" class="btn btn-primary btn-sm mt-2"
+                >View</a
+              >
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <%- include('./partials/footer') %> <%- include('./partials/script') %>
+  </body>
+</html>

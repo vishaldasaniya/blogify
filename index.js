@@ -25,11 +25,11 @@ app.use(checkForAuthenticationCookie("token"));
 app.use(express.static(path.resolve('./public'))); 
 
 app.get("/",async (req,res)=>{
-    const allblogs = await Blog.find({});
+    const latestThreeBlogs = await Blog.find({}).sort({createdAt:-1}).limit(3);
     // console.log(allblogs);
     res.render('home',{
         user:req.user,
-        blogs:allblogs,
+        blogs:latestThreeBlogs,
     });
     
 });
