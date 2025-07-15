@@ -10,8 +10,6 @@ const mongoose = require('mongoose');
 
 
 const app = express();
-
-
 const PORT = process.env.PORT || 8000;
 console.log(process.env.PORT);
 
