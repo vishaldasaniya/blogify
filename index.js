@@ -10,6 +10,8 @@ const mongoose = require('mongoose');
 
 
 const app = express();
+
+
 const PORT = process.env.PORT || 8000;
 console.log(process.env.PORT);
 
@@ -26,7 +28,6 @@ app.use(express.static(path.resolve('./public')));
 
 app.get("/",async (req,res)=>{
     const latestThreeBlogs = await Blog.find({}).sort({createdAt:-1}).limit(3);
-    // console.log(allblogs);
     res.render('home',{
         user:req.user,
         blogs:latestThreeBlogs,
