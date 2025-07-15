@@ -35,7 +35,29 @@ router.post("/addblogdb",upload.single('blogimage'), async (req,res)=>{
     return res.redirect(`/blog/${blog._id}`);
 });
 
+router.get('/allblogs',async (req, res)=>{
+  const blogs = await Blog.find({});
+  return res.render('allblogsdisplay',{
+    user:req.user,
+    blogs
+  })
+})
 
+
+router.get("/delete/:id", async (req,res)=>{
+  const blogid = req.params.id;
+  await Comment.deleteMany({commentOnBlog:blogid});
+  await Blog.findByIdAndDelete(blogid);
+  return res.redirect('/blog/allblogs');
+})
+
+router.get("/commentdelete/:id", async (req,res)=>{
+  const commentid = req.params.id;
+  const comment = await Comment.findById(commentid);
+  const blogid = comment.commentOnBlog;
+  await Comment.findByIdAndDelete(commentid);
+  return res.redirect(`/blog/${blogid}`);
+})
 
 router.post("/comment/:id", async (req,res)=>{
   const commentBody = req.body.commentBody;
@@ -49,6 +71,7 @@ router.post("/comment/:id", async (req,res)=>{
   console.log(commentInfo);
   return res.redirect(`/blog/${req.params.id}`);
 })
+
 
 router.get('/tech',async(req,res)=>{
   const blogs = await Blog.find({blogtype:'tech'});

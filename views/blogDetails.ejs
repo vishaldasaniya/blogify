@@ -26,13 +26,14 @@
     <div class="container mt-3">
       <h1><%= locals.bloginfo.blogtitle %></h1>
       <img src="<%= locals.bloginfo.blogImageURL %>" width="40%" alt="img" />
-      <pre class="mt-3"><%= locals.bloginfo.blogbody %></pre>
+      <p class="mt-3"><%= locals.bloginfo.blogbody %></p>
     </div>
     <div class="container mt-3">
+      <h3>Written By :</h3>
       <img
         src="<%= locals.bloginfo.createdBy.profileImageURL %>"
         alt="img"
-        width="50px"
+        style="height: 2rem; width: 2rem; border-radius: 2rem; margin-right: 1rem;"
       /><%= locals.bloginfo.createdBy.fullName %>
     </div>
 
@@ -57,9 +58,15 @@
       <div class="mt-3">
         <img
           src="<%= comment.commentedBy.profileImageURL %>"
-          width="5%"
+          style="height: 2rem; width: 2rem; border-radius: 2rem; margin-right: 1rem;"
           alt="img"
         /><%= comment.commentedBy.fullName %>
+        <% if (locals.user && (locals.user._id==comment.commentedBy._id)) { %>
+                <a
+                  href="/blog/commentdelete/<%=comment._id%>"
+                  ><img src="/images/deletelogo.jpg" alt="img" style="background: transparent; height: 1rem; width: 1rem; border-radius: 3rem; margin-left: 5px;" /></a
+                >
+              <% } %>
         <pre class="mt-3"><%= comment.commentBody %></pre>
         <hr class="bg-white">
       </div>
